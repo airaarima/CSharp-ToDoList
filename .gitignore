@@ -1,0 +1,28 @@
+﻿# Diretórios e arquivos temporários do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Diretórios de build
+[Bb]in/
+[Oo]bj/
+
+# Arquivos gerados
+*.log
+*.cache
+
+# Pacotes NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Outros arquivos temporários
+*.tmp
+*.temp
+
+# Ignora arquivos de configuração do Visual Studio
+**/Properties/launchSettings.json
+
+appsettings.Development.json
