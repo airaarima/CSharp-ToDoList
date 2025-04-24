@@ -21,7 +21,16 @@ namespace ToDoList.Controllers
             var response = await _service.CreateUserAsync(user);
             if (response == 0) return BadRequest("Não foi possível criar o usuário.");
 
-            return Ok("Usuário criado com sucesso");
+            return Created("Usuário criado com sucesso", response);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync(UserLoginDto user)
+        {
+            var response = await _service.LoginAsync(user);
+            if (response == 0) return BadRequest("Erro ao realizar login.");
+
+            return Ok("Login realizado com sucesso!");
         }
     }
 }

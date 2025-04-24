@@ -30,8 +30,13 @@ public class UserService : IUserService
         return response == 1 ? 1 : 0;
     }
 
-    public Task<int> LoginAsync(UserLoginDto userLogin)
+    public async Task<int> LoginAsync(UserLoginDto userLogin)
     {
-        throw new NotImplementedException();
+        var userExists = await _repository.GetUserByUserNameAsync(userLogin.UserName);
+        if (userExists == null) return 0;
+
+        if (userExists.Password != userLogin.Password) return 0;
+
+        return 1;
     }
 }
