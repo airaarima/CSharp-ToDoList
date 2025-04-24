@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Threading;
 using ToDoList.Infrastructure;
 using ToDoList.Models;
 
