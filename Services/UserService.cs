@@ -1,7 +1,7 @@
 ﻿using ToDoList.DTOs;
 using ToDoList.Models;
 using ToDoList.Repositories;
-
+using ToDoList.Utils;
 
 namespace ToDoList.Services;
 
@@ -23,7 +23,7 @@ public class UserService : IUserService
             Id = new Guid(),
             Name = newUser.Name,
             UserName = newUser.UserName,
-            Password = newUser.Password
+            Password = PasswordHasher.HashPassword(newUser.Password)
         };
 
         var response = await _repository.CreateUserAsync(user);
@@ -35,7 +35,7 @@ public class UserService : IUserService
         var userExists = await _repository.GetUserByUserNameAsync(userLogin.UserName);
         if (userExists == null) return 0;
 
-        if (userExists.Password != userLogin.Password) return 0;
+        if (!PasswordHasher.VerifyPassword(userLogin.Password, userExists.Password)) return 0;
 
         return 1;
     }
