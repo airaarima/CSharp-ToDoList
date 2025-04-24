@@ -21,7 +21,7 @@ namespace ToDoList.Controllers
             var response = await _service.CreateUserAsync(user);
             if (response == 0) return BadRequest("Não foi possível criar o usuário.");
 
-            return Created("Usuário criado com sucesso", response);
+            return Created();
         }
 
         [HttpPost("login")]
