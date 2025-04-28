@@ -26,14 +26,17 @@ public class ToDoRepository : IToDoRepository
 
     }
 
-    public async Task<ToDoItem> GetToDoByIdAsync(Guid id)
+    public async Task<ToDoItem> GetToDoByIdAndUserAsync(Guid id, Guid userId)
     {
-        return await _context.ToDo.FirstOrDefaultAsync(x => x.Id == id);
+        return await _context.ToDo
+                     .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
     }
 
-    public async Task<IEnumerable<ToDoItem>> GetToDosAsync()
+    public async Task<IEnumerable<ToDoItem>> GetToDosByUserIdAsync(Guid userId)
     {
-        return await _context.ToDo.ToListAsync();
+        return await _context.ToDo
+            .Where(t => t.UserId == userId)
+            .ToListAsync();
     }
 
     public async Task<int> UpdateToDoAsync(ToDoItem toDo)

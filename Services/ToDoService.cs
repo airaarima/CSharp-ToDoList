@@ -12,7 +12,7 @@ public class ToDoService : IToDoService
         _repository = repository;
     }
 
-    public async Task<int> CreateToDoAsync(ToDoCreateDto toDo)
+    public async Task<int> CreateToDoAsync(ToDoCreateDto toDo, Guid userId)
     {
         var todo = new ToDoItem
         {
@@ -20,31 +20,32 @@ public class ToDoService : IToDoService
             Title = toDo.Title,
             Description = toDo.Description,
             IsCompleted = toDo.IsCompleted,
-            Data = toDo.Data
+            Data = toDo.Data,
+            UserId = userId
         };
 
         var response = await _repository.CreateToDoAsync(todo);
         return response == 1 ? 1 : 0;
     }
 
-    public async Task<int> DeleteToDoAsync(Guid id)
+    public async Task<int> DeleteToDoAsync(Guid id, Guid userId)
     {
-        var todoExists = await _repository.GetToDoByIdAsync(id);
+        var todoExists = await _repository.GetToDoByIdAndUserAsync(id, userId);
         if (todoExists == null) return 0;
 
         var response = await _repository.DeleteToDoAsync(todoExists);
         return response == 1 ? 1 : 0;
     }
 
-    public async Task<IEnumerable<ToDoItem>> GetToDosAsync()
+    public async Task<IEnumerable<ToDoItem>> GetToDosByUserIdAsync(Guid userId)
     {
-        var todos = await _repository.GetToDosAsync();
+        var todos = await _repository.GetToDosByUserIdAsync(userId);
         return todos;
     }
 
-    public async Task<int> UpdateToDoAsync(ToDoUpdateDto toDo)
+    public async Task<int> UpdateToDoAsync(ToDoUpdateDto toDo, Guid userId)
     {
-        var todoExists = await _repository.GetToDoByIdAsync(toDo.Id);
+        var todoExists = await _repository.GetToDoByIdAndUserAsync(toDo.Id, userId);
         if(todoExists == null) return 0;
 
         todoExists.Title = toDo.Title ?? todoExists.Title;
