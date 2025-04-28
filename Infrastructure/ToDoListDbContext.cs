@@ -10,4 +10,12 @@ public class ToDoListDbContext : DbContext, IToDoListDbContext
     public DbSet<User> User { get; set; }
     public DbSet<ToDoItem> ToDo { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<User>()
+            .HasMany(t => t.ToDos)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
+            .HasPrincipalKey(t => t.Id);
+    }
 }
