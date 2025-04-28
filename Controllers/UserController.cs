@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ToDoList.DTOs;
 using ToDoList.Services;
 
@@ -6,6 +7,7 @@ namespace ToDoList.Controllers
 {
     [Route("api/user")]
     [ApiController]
+    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserService _service;
@@ -28,9 +30,9 @@ namespace ToDoList.Controllers
         public async Task<IActionResult> LoginAsync(UserLoginDto user)
         {
             var response = await _service.LoginAsync(user);
-            if (response == 0) return BadRequest("Erro ao realizar login.");
+            if (response == null) return BadRequest("Erro ao realizar login.");
 
-            return Ok("Login realizado com sucesso!");
+            return Ok(new {accessToken = response});
         }
     }
 }

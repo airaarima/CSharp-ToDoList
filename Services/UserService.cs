@@ -8,9 +8,11 @@ namespace ToDoList.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _repository;
-    public UserService(IUserRepository repository)
+    private readonly AuthService _authService;
+    public UserService(IUserRepository repository, AuthService authService)
     {
         _repository = repository;
+        _authService = authService;
     }
 
     public async Task<int> CreateUserAsync(UserCreateDto newUser)
@@ -30,13 +32,15 @@ public class UserService : IUserService
         return response == 1 ? 1 : 0;
     }
 
-    public async Task<int> LoginAsync(UserLoginDto userLogin)
+    public async Task<string> LoginAsync(UserLoginDto userLogin)
     {
         var userExists = await _repository.GetUserByUserNameAsync(userLogin.UserName);
-        if (userExists == null) return 0;
+        if (userExists == null) return null;
 
-        if (!PasswordHasher.VerifyPassword(userLogin.Password, userExists.Password)) return 0;
+        if (!PasswordHasher.VerifyPassword(userLogin.Password, userExists.Password)) return null;
 
-        return 1;
+        var token = _authService.GenerateJwtToken(userExists);
+
+        return token;
     }
 }

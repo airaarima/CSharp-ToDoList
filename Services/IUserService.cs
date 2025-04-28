@@ -5,5 +5,5 @@ namespace ToDoList.Services;
 public interface IUserService
 {
     Task<int> CreateUserAsync(UserCreateDto newUser);
-    Task<int> LoginAsync(UserLoginDto userLogin);
+    Task<string> LoginAsync(UserLoginDto userLogin);
 }
