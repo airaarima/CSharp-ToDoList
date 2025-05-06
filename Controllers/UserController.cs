@@ -23,7 +23,7 @@ public class UserController : ControllerBase
         var response = await _service.CreateUserAsync(user);
         if (response == 0) return BadRequest("Não foi possível criar o usuário.");
 
-        return Created();
+        return Ok();
     }
 
     [HttpPost("login")]

@@ -36,7 +36,7 @@ public class ToDoController : ControllerBase
         var response = await _service.CreateToDoAsync(toDo, userId);
         if (response == 0) return BadRequest("Não foi possível criar a tarefa.");
 
-        return Created();
+        return Ok();
     }
 
     [HttpPut]
@@ -47,7 +47,7 @@ public class ToDoController : ControllerBase
         var response = await _service.UpdateToDoAsync(toDo, userId);
         if (response == 0) return BadRequest("Erro ao atualizar tarefa.");
 
-        return Ok("Tarefa atualizada com sucesso!");
+        return NoContent();
     }
 
     [HttpDelete]
