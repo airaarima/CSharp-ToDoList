@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+    sqlserver:
+        image: mcr.microsoft.com/mssql/server
+        hostname: "sqlserver" 
+        environment:
+            ACCEPT_EULA: 'Y'
+            SA_PASSWORD: "SenhaSegura123#"
+            DB_USER: "sa"
+            DB_DATABASE: "ToDoList"
+        ports:
+            - "1433:1433"
+        expose:
+            - 1433
