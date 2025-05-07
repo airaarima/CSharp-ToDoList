@@ -13,3 +13,20 @@ services:
             - "1433:1433"
         expose:
             - 1433
+
+    todoapi:
+        build:
+          context: .
+          dockerfile: Dockerfile
+          args:
+            BUILD_CONFIGURATION: Release
+        container_name: todolist-api
+        depends_on:
+          - sqlserver
+        environment:
+          - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=ToDoList;User ID=sa;Password=SenhaSegura123#;TrustServerCertificate=True
+          - JWT__SecretKey=5daea9303f643a9c60b8dfb71cc670b63f26424cc67c6c2873cef075cd214fe9
+          - JWT__Issuer=ToDoList.API
+          - JWT__Audience=ToDoList.Client
+        ports:
+          - "8080:8080"
