@@ -1,5 +1,4 @@
-﻿using ToDoList.DTOs;
-using ToDoList.Models;
+﻿using ToDoList.Models.User;
 using ToDoList.Repositories;
 using ToDoList.Utils;
 
@@ -20,13 +19,8 @@ public class UserService : IUserService
         var userExists = await _repository.GetUserByUserNameAsync(newUser.UserName);
         if (userExists != null) return 0;
 
-        var user = new User
-        {
-            Id = new Guid(),
-            Name = newUser.Name,
-            UserName = newUser.UserName,
-            Password = PasswordHasher.HashPassword(newUser.Password)
-        };
+        newUser.Password = PasswordHasher.HashPassword(newUser.Password);
+        var user = User.CreateUser(newUser);
 
         var response = await _repository.CreateUserAsync(user);
         return response == 1 ? 1 : 0;

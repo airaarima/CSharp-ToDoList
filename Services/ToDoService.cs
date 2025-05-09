@@ -1,5 +1,4 @@
-﻿using ToDoList.DTOs;
-using ToDoList.Models;
+﻿using ToDoList.Models.ToDoItem;
 using ToDoList.Repositories;
 
 namespace ToDoList.Services;
@@ -14,15 +13,7 @@ public class ToDoService : IToDoService
 
     public async Task<int> CreateToDoAsync(ToDoCreateDto toDo, Guid userId)
     {
-        var todo = new ToDoItem
-        {
-            Id = new Guid(),
-            Title = toDo.Title,
-            Description = toDo.Description,
-            IsCompleted = toDo.IsCompleted,
-            Data = toDo.Data,
-            UserId = userId
-        };
+        var todo = ToDoItem.CreateTodoItem(toDo, userId);
 
         var response = await _repository.CreateToDoAsync(todo);
         return response == 1 ? 1 : 0;
@@ -50,7 +41,7 @@ public class ToDoService : IToDoService
 
         todoExists.Title = toDo.Title ?? todoExists.Title;
         todoExists.Description = toDo.Description ?? todoExists.Description;
-        todoExists.IsCompleted = toDo.IsCompleted ?? todoExists.IsCompleted;
+        if (toDo.IsCompleted ?? false) todoExists.Complete();
 
         var response = await _repository.UpdateToDoAsync(todoExists);
         return response == 1 ? 1 : 0;
