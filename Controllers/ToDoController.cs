@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using ToDoList.DTOs;
+using ToDoList.Models.ToDoItem;
 using ToDoList.Services;
 
 namespace ToDoList.Controllers;
@@ -50,8 +50,8 @@ public class ToDoController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteToDoAsync([FromQuery] Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteToDoAsync([FromRoute] Guid id)
     {
         var userId = GetUserId();
 
@@ -60,7 +60,7 @@ public class ToDoController : ControllerBase
 
         return Ok("Tarefa excluída com sucesso!");
     }
-
+ 
     [HttpGet]
     public async Task<IActionResult> GetToDosAsync()
     {
