@@ -1,4 +1,4 @@
-﻿using ToDoList.DTOs;
+﻿using ToDoList.Models.User;
 
 namespace ToDoList.Services;
 

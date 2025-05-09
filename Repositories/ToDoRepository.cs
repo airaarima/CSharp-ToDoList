@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoList.Infrastructure;
-using ToDoList.Models;
+using ToDoList.Models.ToDoItem;
 
 namespace ToDoList.Repositories;
 

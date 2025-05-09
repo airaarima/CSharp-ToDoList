@@ -1,4 +1,4 @@
-﻿namespace ToDoList.DTOs;
+﻿namespace ToDoList.Models.User;
 
 public class UserCreateDto
 {

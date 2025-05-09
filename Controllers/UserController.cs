@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.DTOs;
+using ToDoList.Models.User;
 using ToDoList.Services;
 
 namespace ToDoList.Controllers;

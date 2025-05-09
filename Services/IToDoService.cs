@@ -1,5 +1,4 @@
-﻿using ToDoList.DTOs;
-using ToDoList.Models;
+﻿using ToDoList.Models.ToDoItem;
 
 namespace ToDoList.Services;
 

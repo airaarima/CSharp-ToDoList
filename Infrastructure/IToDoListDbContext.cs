@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ToDoList.Models;
+using ToDoList.Models.ToDoItem;
+using ToDoList.Models.User;
 
 namespace ToDoList.Infrastructure;
 
